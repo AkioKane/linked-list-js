@@ -9,31 +9,30 @@ class LinkedList {
   constructor() {
     this.head = null;
     this.tail = null;
-    this.sizeNode = 0;
+    this.count = 0;
   }
 
   append(value) {
-    const newNode = new Node(value);
-    console.log(newNode);
+    let newNode = new Node(value);
 
-    if (!this.head || !this.tail) {
+    if (!this.tail || !this.head) {
       this.head = newNode;
       this.tail = newNode;
-      this.sizeNode++;
+      this.count++;
 
       return this;
     }
 
     this.tail.nextNode = newNode;
     this.tail = newNode;
-    this.sizeNode++;
+    this.count++;
   }
 
   prepend(value) {
-    const newNode = new Node(value, this.head);
+    let newNode = new Node(value, this.head);
 
     this.head = newNode;
-    this.sizeNode++;
+    this.count++;
 
     if (!this.tail) {
       this.tail = newNode;
@@ -41,7 +40,7 @@ class LinkedList {
   }
 
   size() {
-    return this.sizeNode;
+    return this.count;
   }
 
   headInfo() {
@@ -66,11 +65,48 @@ class LinkedList {
   pop() {
     let current = this.head;
 
-    while(current.nextNode !== this.tail) {
+    if (!this.tail) {
+      return null;
+    }
+
+    if (current === this.tail) {
+      this.head = null;
+      this.tail = null;
+      return;
+    }
+
+    while (current.nextNode !== this.tail) {
       current = current.nextNode;
     }
     current.nextNode = null;
-    this.tail = null;
+    this.tail = current;
+
+    return this;
+  }
+
+  contains(value) {
+    let current = this.head;
+
+    while (current) {
+      if (current.value === value) {
+        return true;
+      }
+      current = current.nextNode;
+    }
+    return false;
+  }
+
+  find(value) {
+    let current = this.head;
+    let index = 0;
+
+    while (current) {
+      if (current.value === value) {
+        return index;
+      }
+      current = current.nextNode;
+      index++;
+    }
   }
 
   print() {
@@ -84,8 +120,3 @@ const list = new LinkedList();
 list.append("dog");
 list.append("cat");
 list.append("parrot");
-
-list.print();
-
-list.pop();
-list.print();
