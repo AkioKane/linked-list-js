@@ -109,6 +109,19 @@ class LinkedList {
     }
   }
 
+  toString() {
+    let current = this.head;
+    let values = [];
+
+    while (current) {
+      values.push(` ( ${current.value} ) `);
+      current = current.nextNode;
+    }
+    values.push(" null");
+
+    return values.join("->");
+  }
+
   print() {
     console.log(this.head);
     console.log(this.tail);
@@ -120,3 +133,8 @@ const list = new LinkedList();
 list.append("dog");
 list.append("cat");
 list.append("parrot");
+list.append("hamster");
+list.append("snake");
+list.append("turtle");
+
+console.log(list.toString());
